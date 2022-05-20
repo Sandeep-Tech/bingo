@@ -9,7 +9,13 @@
 <body>
     <div class="container">
         <div class="main">
-            <h1 class="heading">BINGO</h1>
+            <h1 class="heading">
+                <span id="b" class="bingo-letter">B</span>
+                <span id="I" class="bingo-letter">I</span>
+                <span id="N" class="bingo-letter">N</span>
+                <span id="G" class="bingo-letter">G</span>
+                <span id="O" class="bingo-letter">O</span>
+            </h1>
             <div class="board-wrapper">
                 <div class="board" id="board"></div>
             </div>
@@ -200,7 +206,10 @@
     }
 
     // misc
-
+    function strikeALetter(count) {
+        const bingoArr = document.getElementsByClassName("bingo-letter");
+        bingoArr[count-1].classList.add("line-through");
+    }
 
 
 
@@ -244,7 +253,12 @@
         // bingo check
         if(bingoCheck(bingo, cellTickMap, index)) {
             ++bingo;
-            if (bingo===5) alert("BINGO!");
+            strikeALetter(bingo);
+            if (bingo===5) {
+                setTimeout(() => {
+                    alert("BINGO!");
+                }, 700)
+            }
         }
 
     })
@@ -272,13 +286,19 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
     * { margin:0; padding:0; box-sizing: border-box;}
+    
     .container{ margin:0 auto; }
+    
     .main { display:flex; flex-direction: column; align-items: center; background: #d0a49c; color: white; font-family: 'Roboto', sans-serif; height: 100vh;}
+    
     .heading{ margin: 10px 0; }
+    
     .board-wrapper { width: 280px; height:280px; }
     .board { height: 100%; display:grid; grid-template-columns: repeat(5, 1fr); grid-template-columns: repeat(5, 1fr); border-top: 1px solid white; border-left: 1px solid white; }
     .board .cell { display: flex; align-items: center; justify-content: center; border-right: 1px solid white; border-bottom:1px solid white; cursor:pointer; user-select: none;}
-    .clicked-cell {background: #c0d19d;}
+    
+    .clicked-cell { background: #c0d19d; }
+    .line-through { text-decoration: line-through; }
 
     .red-border{border:1px solid red;}
     .blue-border{border:1px solid blue;}
